@@ -16,10 +16,6 @@ public class HttpHandler : MonoBehaviour
     public int avatarIndex = 0;
     private int currentUserId = 1;
 
-    public GameObject startButton;
-    public GameObject nextButton;
-    public GameObject prevButton;
-
     private string fakeApiUrl = "https://my-json-server.typicode.com/FakeUser123/JsonPlaceholder";
     private string RickAndMortyUrl = "https://rickandmortyapi.com/api";
 
@@ -97,29 +93,13 @@ public class HttpHandler : MonoBehaviour
             avatars[index].texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
     }
-
-    public void StartGame()
+    public void FetchUserDataFromButton(int userId)
     {
-        startButton.SetActive(false);
-        nextButton.SetActive(true);
-        prevButton.SetActive(true);
-    }
-
-    public void Next()
-    {
-        currentUserId++;
-        if (currentUserId > 3)
-            currentUserId = 1;
+        currentUserId = userId;
         StartCoroutine("FetchUserData", currentUserId);
     }
 
-    public void Previous()
-    {
-        currentUserId--;
-        if (currentUserId < 1)
-            currentUserId = 3;
-        StartCoroutine("FetchUserData", currentUserId);
-    }
+
 }
 
 [System.Serializable]
