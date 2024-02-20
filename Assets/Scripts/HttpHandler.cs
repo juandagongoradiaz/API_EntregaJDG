@@ -10,13 +10,13 @@ using TMPro;
 public class HttpHandler : MonoBehaviour
 {
     public RawImage[] avatars;
-    public TextMeshProUGUI[] playerName;
+    public TextMeshProUGUI[] Type;
     public TextMeshProUGUI[] characterName;
     public TextMeshProUGUI usernameDisplay;
     public int avatarIndex = 0;
     private int currentUserId = 1;
 
-    private string fakeApiUrl = "https://my-json-server.typicode.com/FakeUser123/JsonPlaceholder";
+    private string fakeApiUrl = "https://my-json-server.typicode.com/juandagongoradiaz/API_EntregaJDG";
     private string RickAndMortyUrl = "https://rickandmortyapi.com/api";
 
     public void InitiateRequest()
@@ -38,7 +38,7 @@ public class HttpHandler : MonoBehaviour
             if (request.responseCode == 200)
             {
                 UserData user = JsonUtility.FromJson<UserData>(request.downloadHandler.text);
-                usernameDisplay.text = "Player: " + user.username;
+                usernameDisplay.text = "Player: " + user.name;
 
                 foreach (int card in user.deck)
                 {
@@ -68,7 +68,7 @@ public class HttpHandler : MonoBehaviour
             {
                 CharacterData character = JsonUtility.FromJson<CharacterData>(request.downloadHandler.text);
                 characterName[avatarIndex].text = character.name;
-                playerName[avatarIndex].text = character.species;
+                Type[avatarIndex].text = character.species;
                 StartCoroutine(DownloadAvatar(character.image, avatarIndex));
                 avatarIndex++;
             }
@@ -93,13 +93,12 @@ public class HttpHandler : MonoBehaviour
             avatars[index].texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
     }
+
     public void FetchUserDataFromButton(int userId)
     {
         currentUserId = userId;
         StartCoroutine("FetchUserData", currentUserId);
     }
-
-
 }
 
 [System.Serializable]
@@ -122,6 +121,6 @@ public class CharacterData
 public class UserData
 {
     public int id;
-    public string username;
+    public string name;
     public int[] deck;
 }
