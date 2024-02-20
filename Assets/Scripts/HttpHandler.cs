@@ -96,8 +96,14 @@ public class HttpHandler : MonoBehaviour
 
     public void FetchUserDataFromButton(int userId)
     {
-        currentUserId = userId;
-        StartCoroutine("FetchUserData", currentUserId);
+        if (currentUserId != userId)
+            {
+
+            currentUserId = userId;
+            StartCoroutine("FetchUserData", currentUserId);
+
+        }
+       
     }
 }
 
